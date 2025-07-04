@@ -59,6 +59,7 @@ dependencies:
   shared_preferences: ^2.2.2
   sqflite: ^2.3.0
   get: ^4.7.2
+  provider: ^6.1.5
 
 dev_dependencies:
   flutter_test:
