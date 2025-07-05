@@ -40,6 +40,7 @@ class _DemoProviderScreenState extends State<DemoProviderScreen> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: AnimatedContainer(
+                    curve: Curves.easeInOut,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: _getColor(provider.volume),

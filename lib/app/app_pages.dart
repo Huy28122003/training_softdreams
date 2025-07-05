@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:training_softdreams/presentation/pages/auth/binding/auth_binding.dart';
+import 'package:training_softdreams/presentation/pages/auth/view/auth_view.dart';
 import '../presentation/pages/demo_getx/binding/demo_getx_binding.dart';
 import '../presentation/pages/demo_getx/view/demo_getx_view.dart';
 import '../presentation/pages/demo_provider/demo_provider_screen.dart';
@@ -45,6 +47,11 @@ class AppPages {
         create: (_) => DemoProviderService(),
         child: const DemoProviderScreen(),
       ),
+    ),
+    GetPage(
+      name: AppRoutes.auth,
+      page: () => AuthView(),
+      binding: AuthBinding(),
     ),
   ];
 }

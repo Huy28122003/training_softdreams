@@ -30,9 +30,9 @@ class _MyAppState extends State<MyApp> {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isAuthenticated) {
-              Get.offAllNamed(AppRoutes.home);
+              Get.offAllNamed(AppRoutes.auth);
             } else if (state.status.isUnauthenticated) {
-              Get.offAllNamed(AppRoutes.home);
+              Get.offAllNamed(AppRoutes.auth);
             }
           },
         ),

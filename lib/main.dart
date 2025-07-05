@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,11 +9,15 @@ import 'app_bloc_observer.dart';
 import 'di/locator.dart';
 import 'domain/usecases/auth/delete_token.dart';
 import 'domain/usecases/auth/get_authorized_user.dart';
+import 'firebase_options.dart';
 import 'presentation/blocs/auth/auth_bloc.dart';
 import 'utils/logging.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   Bloc.observer = AppBlocObserver();
   await setupLocator();
