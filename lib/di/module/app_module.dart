@@ -1,6 +1,11 @@
-import 'package:training_softdreams/data/network/firebase/firebase_service.dart';
+import 'package:training_softdreams/data/network/firebase/animal_firebase.dart';
+import 'package:training_softdreams/data/network/firebase/user_firebase.dart';
+import 'package:training_softdreams/data/repository/animal_repository_impl.dart';
 import 'package:training_softdreams/data/repository/user_repository_impl.dart';
+import 'package:training_softdreams/domain/repository/animal_repository.dart';
 import 'package:training_softdreams/domain/repository/user_repository.dart';
+import 'package:training_softdreams/domain/usecases/animal/add_animal_use_case.dart';
+import 'package:training_softdreams/domain/usecases/animal/get_animals_use_case.dart';
 import 'package:training_softdreams/domain/usecases/user/login_use_case.dart';
 import 'package:training_softdreams/domain/usecases/user/sign_up_use_case.dart';
 
@@ -96,7 +101,12 @@ class AppModule {
 
     locator.registerLazySingleton<UserRepository>(
       () => UserRepositoryImpl(
-        locator<FirebaseService>(),
+        locator<UserFirebase>(),
+      ),
+    );
+    locator.registerLazySingleton<AnimalRepository>(
+      () => AnimalRepositoryImpl(
+        animalFirebase: locator<AnimalFirebase>(),
       ),
     );
   }
@@ -160,6 +170,14 @@ class AppModule {
     );
     locator.registerLazySingleton(
       () => SignUpUseCase(locator<UserRepository>()),
+    );
+
+    // Animal
+    locator.registerLazySingleton(
+      () => GetAnimalsUseCase(locator<AnimalRepository>()),
+    );
+    locator.registerLazySingleton(
+      () => AddAnimalUseCase(locator<AnimalRepository>()),
     );
   }
 }

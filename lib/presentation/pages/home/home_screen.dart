@@ -42,6 +42,12 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: const Text('Provider'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.animal);
+                },
+                child: const Text('Animal'),
+              ),
             ],
           ),
         ),

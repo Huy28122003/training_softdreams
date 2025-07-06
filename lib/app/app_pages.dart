@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:training_softdreams/presentation/pages/animal/binding/animal_binding.dart';
+import 'package:training_softdreams/presentation/pages/animal/view/animal_view.dart';
 import 'package:training_softdreams/presentation/pages/auth/binding/auth_binding.dart';
 import 'package:training_softdreams/presentation/pages/auth/view/auth_view.dart';
 import '../presentation/pages/demo_getx/binding/demo_getx_binding.dart';
@@ -52,6 +54,11 @@ class AppPages {
       name: AppRoutes.auth,
       page: () => AuthView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.animal,
+      page: () => AnimalView(),
+      binding: AnimalBinding(),
     ),
   ];
 }

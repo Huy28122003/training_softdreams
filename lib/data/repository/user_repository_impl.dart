@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import '../../domain/repository/user_repository.dart';
-import '../network/firebase/firebase_service.dart';
+import '../network/firebase/user_firebase.dart';
 
 class UserRepositoryImpl extends UserRepository {
   UserRepositoryImpl(this.firebase);
 
-  final FirebaseService firebase;
+  final UserFirebase firebase;
 
   @override
   Future<Tuple2<bool, String>> login(String email, String password) {
