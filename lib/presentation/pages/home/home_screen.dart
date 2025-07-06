@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () {
-                  Get.toNamed(AppRoutes.demoBloc,arguments: 2);
+                  Get.toNamed(AppRoutes.demoBloc, arguments: 2);
                 },
                 child: const Text('Bloc'),
               ),
@@ -32,9 +32,15 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
-
+                  Get.toNamed(AppRoutes.demoGetX);
                 },
                 child: const Text('GetX'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.demoProvider);
+                },
+                child: const Text('Provider'),
               ),
             ],
           ),

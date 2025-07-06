@@ -49,3 +49,5 @@ lib/gen/*
 lib/**/*.g.dart
 lib/firebase_options.dart
 pubspec.lock
+/firebase.json
+/android/app/google-services.json

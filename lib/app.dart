@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
+import 'app/app_pages.dart';
+import 'app/app_routes.dart';
 import 'configs/themes/app_themes.dart';
 import 'presentation/blocs/auth/auth_bloc.dart';
-import 'presentation/screens/splash/splash_screen.dart';
-import 'routes.dart';
 import 'utils/constants/strings.dart';
 
 class MyApp extends StatefulWidget {
@@ -29,9 +30,9 @@ class _MyAppState extends State<MyApp> {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isAuthenticated) {
-              AppNavigator.replaceToFirst(Routes.home);
+              Get.offAllNamed(AppRoutes.auth);
             } else if (state.status.isUnauthenticated) {
-              AppNavigator.replaceToFirst(Routes.intro);
+              Get.offAllNamed(AppRoutes.auth);
             }
           },
         ),
@@ -45,13 +46,12 @@ class _MyAppState extends State<MyApp> {
           },
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: appTitle,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark,
-        navigatorKey: AppNavigator.navigatorKey,
-        onGenerateRoute: AppNavigator.onGenerateRoute,
-        home: const SplashScreen(),
+        getPages: AppPages.routes,
+        initialRoute: AppRoutes.splash,
       ),
     );
   }
