@@ -1,7 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:training_softdreams/app/app_routes.dart';
 import 'package:training_softdreams/configs/enums.dart';
+import 'package:training_softdreams/di/locator.dart';
+import 'package:training_softdreams/domain/usecases/user/login_use_case.dart';
+import 'package:training_softdreams/domain/usecases/user/sign_up_use_case.dart';
 
 class AuthController extends GetxController {
   RxBool isLoginMode = true.obs;
@@ -14,6 +17,9 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  final LoginUseCase loginUseCase = locator<LoginUseCase>();
+  final SignUpUseCase signUpUseCase = locator<SignUpUseCase>();
+
   Future<void> onLogIn() async {
     status.value = LoadingStatus.loading;
     final email = this.email.value;
@@ -23,39 +29,25 @@ class AuthController extends GetxController {
       status.value = LoadingStatus.failure;
       return;
     }
-    try {
-      status.value = LoadingStatus.loading;
+    status.value = LoadingStatus.loading;
 
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email.trim(),
-        password: password,
-      );
+    final result = await loginUseCase
+        .call(LoginArguments(email: email, password: password));
 
-      status.value = LoadingStatus.success;
-    } on FirebaseAuthException catch (e) {
-      status.value = LoadingStatus.failure;
-
-      String message;
-      print(e.code);
-      switch (e.code) {
-        case 'invalid-credential':
-          message = "Invalid account";
-          break;
-        case 'wrong-password':
-          message = "Incorrect password.";
-          break;
-        case 'user-disabled':
-          message = "This account has been disabled.";
-          break;
-        default:
-          message = "Login failed. Please try again.";
-      }
-
-      Get.snackbar("Login Error", message);
-    } catch (e) {
-      status.value = LoadingStatus.failure;
-      Get.snackbar("Error", "An unexpected error occurred.");
-    }
+    result.fold(
+      (error) {
+        status.value = LoadingStatus.failure;
+      },
+      (success) {
+        if (success.value1) {
+          Get.offAllNamed(AppRoutes.home);
+          status.value = LoadingStatus.success;
+        } else {
+          status.value = LoadingStatus.failure;
+        }
+        Get.snackbar("", success.value2);
+      },
+    );
   }
 
   void onChangeMode() {
@@ -86,36 +78,22 @@ class AuthController extends GetxController {
       return;
     }
 
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+    final result = await signUpUseCase
+        .call(SignUpArguments(email: email, password: password));
 
-      status.value = LoadingStatus.success;
-      Get.snackbar("Success", "Account created successfully");
-    } on FirebaseAuthException catch (e) {
-      status.value = LoadingStatus.failure;
-
-      String message;
-      switch (e.code) {
-        case 'email-already-in-use':
-          message = "This email is already registered.";
-          break;
-        case 'invalid-email':
-          message = "Invalid email format.";
-          break;
-        case 'weak-password':
-          message = "Password is too weak.";
-          break;
-        default:
-          message = "Sign up failed. Please try again.";
-      }
-
-      Get.snackbar("Sign Up Error", message);
-    } catch (e) {
-      status.value = LoadingStatus.failure;
-      Get.snackbar("Error", "An unexpected error occurred.");
-    }
+    result.fold(
+      (error) {
+        status.value = LoadingStatus.failure;
+      },
+      (success) {
+        if (success.value1) {
+          Get.offAllNamed(AppRoutes.home);
+          status.value = LoadingStatus.success;
+        } else {
+          status.value = LoadingStatus.failure;
+        }
+        Get.snackbar("", success.value2);
+      },
+    );
   }
 }

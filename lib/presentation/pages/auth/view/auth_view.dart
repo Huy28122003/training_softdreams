@@ -29,12 +29,15 @@ class AuthView extends GetView<AuthController> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
           children: [
-            Padding(
+            SingleChildScrollView(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 50,
+                  ),
                   TextField(
                     onChanged: (value) => controller.email.value = value,
                     decoration: InputDecoration(labelText: "Email"),
