@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -20,6 +21,10 @@ class StatusCode {
   static const int socketError = 1102;
   static const int receiveTimeout = 1103;
   static const int sendTimeout = 1104;
+
+  static const int duplicate = 409;
+  static const int precondition = 412;
+  static const int unavailable = 503;
 }
 
 class AppException extends Equatable implements Exception {
@@ -40,11 +45,52 @@ class AppException extends Equatable implements Exception {
         default:
           return const ServerException();
       }
+    } else if (exception is FirebaseException) {
+      return _fromFirebase(exception);
     } else if (exception is AppException) {
       return exception;
     }
 
     return UnknownException(exception.toString());
+  }
+
+  static AppException _fromFirebase(FirebaseException e) {
+    switch (e.code) {
+      case 'permission-denied':
+      case 'unauthenticated':
+        return const UnauthorisedException();
+
+      case 'not-found':
+        return RemoteException(StatusCode.notFound, e.message);
+
+      case 'already-exists':
+        return RemoteException(StatusCode.duplicate, e.message);
+
+      case 'failed-precondition':
+      case 'invalid-argument':
+        return BadRequestException(e.message);
+
+      case 'unavailable':
+      case 'deadline-exceeded':
+        return RemoteException(StatusCode.unavailable, e.message);
+
+      case 'internal':
+        return const ServerException();
+
+      case 'email-already-in-use':
+      case 'account-exists-with-different-credential':
+        return BadRequestException('Email đã được sử dụng');
+
+      case 'weak-password':
+        return BadRequestException('Mật khẩu quá yếu');
+
+      case 'wrong-password':
+      case 'user-not-found':
+        return const UnauthorisedException();
+
+      default:
+        return UnknownException(e.message);
+    }
   }
 
   static Tuple2<int, String?> _getStatusCode(DioException error) {
