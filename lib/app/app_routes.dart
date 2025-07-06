@@ -7,4 +7,5 @@ abstract class AppRoutes {
   static const demoGetX = '/demoGetX';
   static const demoProvider = '/demoProvider';
   static const auth = '/auth';
+  static const animal = '/animal';
 }

@@ -1,6 +1,8 @@
+import 'package:training_softdreams/data/network/firebase/animal_firebase.dart';
+
 import '../../data/local/preference/app_preferences.dart';
 import '../../data/network/client/none_auth_app_server_api_client.dart';
-import '../../data/network/firebase/firebase_service.dart';
+import '../../data/network/firebase/user_firebase.dart';
 import '../../data/network/interceptors/access_token_interceptor.dart';
 import '../locator.dart';
 
@@ -24,6 +26,7 @@ class NetworkModule {
   }
 
   static void _provideFirebase() {
-    locator.registerLazySingleton(() => FirebaseService());
+    locator.registerLazySingleton(() => UserFirebase());
+    locator.registerLazySingleton(() => AnimalFirebase());
   }
 }
