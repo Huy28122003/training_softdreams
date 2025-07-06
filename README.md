@@ -1,6 +1,8 @@
 # Teleprompter
 
-A flutter project for a teleprompter.
+Training:
+- GetX, Bloc, Provider
+- Clean Architecture
 
 ## Getting Started
 

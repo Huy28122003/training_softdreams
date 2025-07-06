@@ -1,3 +1,9 @@
+import 'package:training_softdreams/data/network/firebase/firebase_service.dart';
+import 'package:training_softdreams/data/repository/user_repository_impl.dart';
+import 'package:training_softdreams/domain/repository/user_repository.dart';
+import 'package:training_softdreams/domain/usecases/user/login_use_case.dart';
+import 'package:training_softdreams/domain/usecases/user/sign_up_use_case.dart';
+
 import '../../data/local/database/app_database.dart';
 import '../../data/local/preference/app_preferences.dart';
 import '../../data/network/apis/download_api.dart';
@@ -87,6 +93,12 @@ class AppModule {
         database: locator<AppDatabase>(),
       ),
     );
+
+    locator.registerLazySingleton<UserRepository>(
+      () => UserRepositoryImpl(
+        locator<FirebaseService>(),
+      ),
+    );
   }
 
   static void _provideUsecases() {
@@ -140,6 +152,14 @@ class AppModule {
     );
     locator.registerLazySingleton(
       () => RemoveSavedPost(locator<PostRepository>()),
+    );
+
+    // User
+    locator.registerLazySingleton(
+      () => LoginUseCase(locator<UserRepository>()),
+    );
+    locator.registerLazySingleton(
+      () => SignUpUseCase(locator<UserRepository>()),
     );
   }
 }
