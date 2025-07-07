@@ -1,9 +1,6 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../../domain/models/animal.dart';
 
 class AnimalFirebase {

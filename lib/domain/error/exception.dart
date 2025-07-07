@@ -181,3 +181,15 @@ class RemoteException extends AppException {
 class FileLargeException extends AppException {
   const FileLargeException() : super(fileLargeError);
 }
+
+class FirebaseEmailAlreadyExistsException extends AppException {
+  const FirebaseEmailAlreadyExistsException() : super(emailAlreadyExistsError);
+}
+
+class FirebaseInvalidEmailException extends AppException {
+  const FirebaseInvalidEmailException() : super(invalidEmailError);
+}
+
+class FirebaseInvalidPasswordException extends AppException {
+  const FirebaseInvalidPasswordException() : super(invalidPasswordError);
+}

@@ -16,3 +16,6 @@ const String serverError = 'Server error';
 const String cacheError = 'Cache error';
 const String socketError = 'No internet connection';
 const String fileLargeError = 'File is too big, max size 10mb';
+const String emailAlreadyExistsError = 'Email already exists';
+const String invalidEmailError = 'Invalid email';
+const String invalidPasswordError = 'Invalid password';
