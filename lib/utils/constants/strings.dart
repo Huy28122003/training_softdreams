@@ -16,3 +16,7 @@ const String serverError = 'Server error';
 const String cacheError = 'Cache error';
 const String socketError = 'No internet connection';
 const String fileLargeError = 'File is too big, max size 10mb';
+
+// Firebase
+
+const String animalCollectionName = 'animals';

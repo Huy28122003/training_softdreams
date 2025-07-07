@@ -1,15 +1,14 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:training_softdreams/utils/constants/strings.dart';
 
 import '../../../domain/models/animal.dart';
 
 class AnimalFirebase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  static const _collection = 'animals';
+  static const _collection = animalCollectionName;
 
   Future<void> addAnimal(Animal animal) async {
     try {

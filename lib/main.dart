@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 
-import 'app.dart';
-import 'app_bloc_observer.dart';
+import 'app/app.dart';
+import 'app/app_bloc_observer.dart';
 import 'di/locator.dart';
 import 'domain/usecases/auth/delete_token.dart';
 import 'domain/usecases/auth/get_authorized_user.dart';

@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-import 'app/app_pages.dart';
-import 'app/app_routes.dart';
-import 'configs/themes/app_themes.dart';
-import 'presentation/blocs/auth/auth_bloc.dart';
-import 'utils/constants/strings.dart';
+import 'app_pages.dart';
+import 'app_routes.dart';
+import '../configs/themes/app_themes.dart';
+import '../presentation/blocs/auth/auth_bloc.dart';
+import '../utils/constants/strings.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
