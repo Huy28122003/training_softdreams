@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 
 import 'app/app.dart';
 import 'app/app_bloc_observer.dart';
+import 'core/firebase/notification_service.dart';
 import 'di/locator.dart';
 import 'domain/usecases/auth/delete_token.dart';
 import 'domain/usecases/auth/get_authorized_user.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await NotificationService.instance.initialize();
   Bloc.observer = AppBlocObserver();
   await setupLocator();
 
