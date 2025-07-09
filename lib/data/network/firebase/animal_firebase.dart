@@ -1,9 +1,8 @@
-import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:training_softdreams/utils/constants/strings.dart';
 
-import '../../../domain/models/animal.dart';
+import '../../../utils/constants/strings.dart';
+import '../../models/animal.dart';
 
 class AnimalFirebase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

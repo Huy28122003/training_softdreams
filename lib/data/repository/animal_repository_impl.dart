@@ -1,42 +1,39 @@
-import 'package:dartz/dartz.dart';
-import 'package:training_softdreams/data/network/firebase/animal_firebase.dart';
-import 'package:training_softdreams/domain/models/animal.dart';
-import 'package:training_softdreams/domain/repository/animal_repository.dart';
-import '../../domain/repository/user_repository.dart';
-import '../network/firebase/user_firebase.dart';
+
+import 'package:training_softdreams/data/translators/animal_translator.dart';
+
+import '../../domain/entities/animal_entity.dart';
+import '../../domain/repository/animal_repository.dart';
+import '../models/animal.dart';
+import '../network/firebase/data_sources/animal_firebase_data_sources.dart';
 
 class AnimalRepositoryImpl extends AnimalRepository {
-  final AnimalFirebase animalFirebase;
+  final AnimalFirebaseDataSources animalFirebaseDataSources;
 
-  AnimalRepositoryImpl({required this.animalFirebase});
-
-  @override
-  Future<void> addAnimal(Animal animal) async {
-    try {
-      await animalFirebase.addAnimal(animal);
-    } catch (e) {}
-  }
+  AnimalRepositoryImpl({required this.animalFirebaseDataSources});
 
   @override
-  Future<void> deleteAnimal(String id) async {
+  Future<void> addAnimal(AnimalEntity animal) async {
     try {
-      await animalFirebase.deleteAnimal(id);
-    } catch (e) {}
-  }
-
-  @override
-  Future<List<Animal>> getAnimals() async {
-    try {
-      return await animalFirebase.getAnimals();
+      await animalFirebaseDataSources.addAnimal(
+        Animal(
+          name: animal.name,
+          isHerbivores: animal.isHerbivores,
+          isEggLaying: animal.isEggLaying,
+          quantity: animal.quantity,
+        ),
+      );
     } catch (e) {
       throw Exception(e.toString());
     }
   }
 
   @override
-  Future<void> updateAnimal(Animal animal) async {
+  Future<List<AnimalEntity>> getAnimals() async {
     try {
-      await animalFirebase.updateAnimal(animal);
-    } catch (e) {}
+      final result = await animalFirebaseDataSources.getAnimals();
+      return result.map((e) => e.toEntity()).toList();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

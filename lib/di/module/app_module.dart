@@ -1,4 +1,6 @@
 import 'package:training_softdreams/data/network/firebase/animal_firebase.dart';
+import 'package:training_softdreams/data/network/firebase/data_sources/animal_firebase_data_sources.dart';
+import 'package:training_softdreams/data/network/firebase/data_sources/user_firebase_data_sources.dart';
 import 'package:training_softdreams/data/network/firebase/user_firebase.dart';
 import 'package:training_softdreams/data/repository/animal_repository_impl.dart';
 import 'package:training_softdreams/data/repository/user_repository_impl.dart';
@@ -47,137 +49,156 @@ class AppModule {
 
   static void registerModule() {
     _provideApis();
+    _provideDataSources();
     _provideRepository();
-    _provideUsecases();
+    _provideUseCases();
   }
 
   static void _provideApis() {
     locator.registerLazySingleton(
-      () => UploadApi(locator<NoneAuthAppServerApiClient>()),
+          () => UploadApi(locator<NoneAuthAppServerApiClient>()),
     );
     locator.registerLazySingleton(
-      () => PostApi(locator<NoneAuthAppServerApiClient>()),
+          () => PostApi(locator<NoneAuthAppServerApiClient>()),
     );
     locator.registerLazySingleton(
-      () => DownloadApi(locator<NoneAuthAppServerApiClient>()),
+          () => DownloadApi(locator<NoneAuthAppServerApiClient>()),
     );
     locator.registerLazySingleton(
-      () => SyncApi(locator<NoneAuthAppServerApiClient>()),
+          () => SyncApi(locator<NoneAuthAppServerApiClient>()),
+    );
+  }
+
+  static void _provideDataSources() {
+    locator.registerLazySingleton<AnimalFirebaseDataSources>(
+          () => AnimalFirebaseDataSourcesImpl(locator<AnimalFirebase>()),
+    );
+    locator.registerLazySingleton<UserFirebaseDataSources>(
+          () => UserFirebaseDataSourcesImpl(locator<UserFirebase>()),
     );
   }
 
   static void _provideRepository() {
     locator.registerLazySingleton<TokenRepository>(
-      () => TokenRepositoryImpl(
-        locator<AppPreferences>(),
-      ),
+          () =>
+          TokenRepositoryImpl(
+            locator<AppPreferences>(),
+          ),
     );
     locator.registerLazySingleton<UploadRepository>(
-      () => UploadRepositoryImpl(locator<UploadApi>()),
+          () => UploadRepositoryImpl(locator<UploadApi>()),
     );
     locator.registerLazySingleton<DownloadRepository>(
-      () => DownloadRepositoryImpl(
-        downloadApi: locator<DownloadApi>(),
-        preferences: locator<AppPreferences>(),
-      ),
+          () =>
+          DownloadRepositoryImpl(
+            downloadApi: locator<DownloadApi>(),
+            preferences: locator<AppPreferences>(),
+          ),
     );
     locator.registerLazySingleton<AppSettingsRepository>(
-      () => AppSettingsRepositoryImpl(
-        locator<AppPreferences>(),
-      ),
+          () =>
+          AppSettingsRepositoryImpl(
+            locator<AppPreferences>(),
+          ),
     );
     locator.registerLazySingleton<SyncRepository>(
-      () => SyncRepositoryImpl(
-        syncApi: locator<SyncApi>(),
-        database: locator<AppDatabase>(),
-      ),
+          () =>
+          SyncRepositoryImpl(
+            syncApi: locator<SyncApi>(),
+            database: locator<AppDatabase>(),
+          ),
     );
     locator.registerLazySingleton<PostRepository>(
-      () => PostRepositoryImpl(
-        postApi: locator<PostApi>(),
-        database: locator<AppDatabase>(),
-      ),
+          () =>
+          PostRepositoryImpl(
+            postApi: locator<PostApi>(),
+            database: locator<AppDatabase>(),
+          ),
     );
 
     locator.registerLazySingleton<UserRepository>(
-      () => UserRepositoryImpl(
-        locator<UserFirebase>(),
-      ),
+          () =>
+          UserRepositoryImpl(
+            locator<UserFirebase>(),
+          ),
     );
     locator.registerLazySingleton<AnimalRepository>(
-      () => AnimalRepositoryImpl(
-        animalFirebase: locator<AnimalFirebase>(),
-      ),
+          () =>
+          AnimalRepositoryImpl(
+            animalFirebaseDataSources: locator<AnimalFirebaseDataSources>(),
+          ),
     );
   }
 
-  static void _provideUsecases() {
+  static void _provideUseCases() {
     // Auth
     locator.registerLazySingleton(
-      () => GetAuthorizedUser(),
+          () => GetAuthorizedUser(),
     );
     locator.registerLazySingleton(
-      () => DeleteToken(
-        tokenRepository: locator<TokenRepository>(),
-      ),
+          () =>
+          DeleteToken(
+            tokenRepository: locator<TokenRepository>(),
+          ),
     );
 
     // Upload
     locator.registerLazySingleton(
-      () => UploadFile(locator<UploadRepository>()),
+          () => UploadFile(locator<UploadRepository>()),
     );
 
     // Download
     locator.registerLazySingleton(
-      () => DownloadFile(locator<DownloadRepository>()),
+          () => DownloadFile(locator<DownloadRepository>()),
     );
     locator.registerLazySingleton(
-      () => CancelDownload(locator<DownloadRepository>()),
+          () => CancelDownload(locator<DownloadRepository>()),
     );
 
     // Settings
     locator.registerLazySingleton(
-      () => GetVersionData(locator<AppSettingsRepository>()),
+          () => GetVersionData(locator<AppSettingsRepository>()),
     );
     locator.registerLazySingleton(
-      () => SaveVersionData(locator<AppSettingsRepository>()),
+          () => SaveVersionData(locator<AppSettingsRepository>()),
     );
 
     // Sync
     locator.registerLazySingleton(
-      () => SyncPostData(
-        syncRepository: locator<SyncRepository>(),
-      ),
+          () =>
+          SyncPostData(
+            syncRepository: locator<SyncRepository>(),
+          ),
     );
 
     // Post
     locator.registerLazySingleton(
-      () => GetListPosts(locator<PostRepository>()),
+          () => GetListPosts(locator<PostRepository>()),
     );
     locator.registerLazySingleton(
-      () => GetListSavedPosts(locator<PostRepository>()),
+          () => GetListSavedPosts(locator<PostRepository>()),
     );
     locator.registerLazySingleton(
-      () => SavePost(locator<PostRepository>()),
+          () => SavePost(locator<PostRepository>()),
     );
     locator.registerLazySingleton(
-      () => RemoveSavedPost(locator<PostRepository>()),
+          () => RemoveSavedPost(locator<PostRepository>()),
     );
 
     // User
     locator.registerLazySingleton(
-      () => LoginUseCase(locator<UserRepository>()),
+          () => LoginUseCase(locator<UserRepository>()),
     );
     locator.registerLazySingleton(
-      () => SignUpUseCase(locator<UserRepository>()),
+          () => SignUpUseCase(locator<UserRepository>()),
     );
 
     // Animal
     locator.registerLazySingleton(
-      () => GetAnimalsUseCase(locator<AnimalRepository>()),
+          () => GetAnimalsUseCase(locator<AnimalRepository>()),
     );
     locator.registerLazySingleton(
-      () => AddAnimalUseCase(locator<AnimalRepository>()),
+          () => AddAnimalUseCase(locator<AnimalRepository>()),
     );
   }
 }

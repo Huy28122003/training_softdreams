@@ -1,12 +1,9 @@
 
-import '../models/animal.dart';
+
+import '../entities/animal_entity.dart';
 
 abstract class AnimalRepository {
-  Future<void> addAnimal(Animal animal);
+  Future<void> addAnimal(AnimalEntity animal);
 
-  Future<List<Animal>> getAnimals();
-
-  Future<void> updateAnimal(Animal animal);
-
-  Future<void> deleteAnimal(String id);
+  Future<List<AnimalEntity>> getAnimals();
 }

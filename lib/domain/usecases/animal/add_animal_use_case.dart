@@ -1,18 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:training_softdreams/domain/models/animal.dart';
-import 'package:training_softdreams/domain/repository/animal_repository.dart';
-import 'package:training_softdreams/domain/repository/user_repository.dart';
 
+import '../../entities/animal_entity.dart';
 import '../../error/failures.dart';
+import '../../repository/animal_repository.dart';
 import '../usecase.dart';
 
-class AddAnimalUseCase implements UseCase<void, Animal> {
+class AddAnimalUseCase implements UseCase<void, AnimalEntity> {
   AddAnimalUseCase(this.animalRepository);
 
   final AnimalRepository animalRepository;
 
   @override
-  Future<Either<Failure, void>> call(Animal param) async {
+  Future<Either<Failure, void>> call(AnimalEntity param) async {
     try {
       await animalRepository.addAnimal(param);
       return Right(null);

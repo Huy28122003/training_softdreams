@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:training_softdreams/configs/enums.dart';
-import 'package:training_softdreams/domain/models/animal.dart';
-import 'package:training_softdreams/presentation/pages/animal/controller/animal_controller.dart';
+
+import '../../../../configs/enums.dart';
+import '../../../../domain/entities/animal_entity.dart';
+import '../controller/animal_controller.dart';
+
 
 class AnimalView extends GetView<AnimalController> {
   const AnimalView({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class AnimalView extends GetView<AnimalController> {
         onPressed: () {
           final random = Random();
           controller.addAnimal(
-            Animal(
+            AnimalEntity(
               name: 'Unknown',
               isHerbivores: random.nextBool(),
               isEggLaying: random.nextBool(),

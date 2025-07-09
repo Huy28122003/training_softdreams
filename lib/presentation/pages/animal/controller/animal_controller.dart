@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
 import '../../../../configs/enums.dart';
-import '../../../../domain/models/animal.dart';
+import '../../../../domain/entities/animal_entity.dart';
 import '../../../../domain/usecases/animal/add_animal_use_case.dart';
 import '../../../../domain/usecases/animal/get_animals_use_case.dart';
 
 class AnimalController extends GetxController {
-  var animals = <Animal>[].obs;
+  var animals = <AnimalEntity>[].obs;
   var status = LoadingStatus.initial.obs;
 
   final GetAnimalsUseCase getAnimalsUseCase;
@@ -42,7 +42,7 @@ class AnimalController extends GetxController {
     }
   }
 
-  Future<void> addAnimal(Animal animal) async {
+  Future<void> addAnimal(AnimalEntity animal) async {
     try {
       status.value = LoadingStatus.loading;
       final result = await addAnimalUseCase.call(animal);
