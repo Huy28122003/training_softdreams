@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:path_provider/path_provider.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(
@@ -61,31 +65,57 @@ class NotificationService {
 
   Future<void> showNotification(RemoteMessage remoteMessage) async {
     RemoteNotification? notification = remoteMessage.notification;
-    AndroidNotification? androidNotification =
-        remoteMessage.notification?.android;
-    if (notification != null && androidNotification != null) {
-      await _localNotification.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            "com.example.training_softdreams/android",
-            "Training Soft Dreams Android Notification",
-            channelDescription: "NgQuHuy",
-            importance: Importance.high,
-            priority: Priority.high,
-            icon: '@mipmap/ic_launcher',
-          ),
-          iOS: const DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-          ),
-        ),
-        payload: remoteMessage.data.toString(),
+    AndroidNotification? androidNotification = notification?.android;
+
+    String? imageUrl =
+        androidNotification?.imageUrl ?? notification?.apple?.imageUrl;
+
+    BigPictureStyleInformation? bigPicture;
+
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      final httpResponse = await http.get(Uri.parse(imageUrl));
+      final bigPicturePath =
+          await _saveImageToFile(httpResponse.bodyBytes, 'big_picture');
+      final bigPictureFilePath = FilePathAndroidBitmap(bigPicturePath);
+
+      bigPicture = BigPictureStyleInformation(
+        bigPictureFilePath,
+        contentTitle: notification?.title,
+        summaryText: notification?.body,
       );
     }
+
+    await _localNotification.show(
+      notification.hashCode,
+      notification?.title,
+      notification?.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          "com.example.training_softdreams/android",
+          "Training Soft Dreams Android Notification",
+          channelDescription: "NgQuHuy",
+          styleInformation: bigPicture,
+          // <- gắn style có ảnh
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      ),
+      payload: remoteMessage.data.toString(),
+    );
+  }
+
+  Future<String> _saveImageToFile(Uint8List bytes, String name) async {
+    final directory = await getTemporaryDirectory();
+    final filePath = '${directory.path}/$name';
+    final file = File(filePath);
+    await file.writeAsBytes(bytes);
+    return filePath;
   }
 
   Future<void> _setupMessageHandler() async {
