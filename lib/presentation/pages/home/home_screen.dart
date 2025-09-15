@@ -48,6 +48,12 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: const Text('Animal'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.chatBot);
+                },
+                child: const Text('Chat Bot'),
+              ),
             ],
           ),
         ),

@@ -66,6 +66,9 @@ dependencies:
   firebase_messaging: ^15.2.9
   flutter_local_notifications: ^19.3.0
   http: ^1.5.0
+  sqflite_common_ffi_web: ^0.4.5+4
+  otp_pin_field: ^1.4.1
+  flutter_inappwebview: ^6.1.5
 
 dev_dependencies:
   flutter_test:
