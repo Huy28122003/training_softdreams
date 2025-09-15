@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../configs/themes/app_colors.dart';
 
 class ChartPage extends StatefulWidget {
-  ChartPage({super.key});
+  const ChartPage({super.key});
 
   final Color dark = Colors.red;
   final Color normal = Colors.blue;
@@ -48,9 +48,7 @@ class ChartPageState extends State<ChartPage> {
     if (value == meta.max) {
       return Container();
     }
-    const style = TextStyle(
-      fontSize: 10,
-    );
+    const style = TextStyle(fontSize: 10);
     return SideTitleWidget(
       meta: meta,
       child: Text(
@@ -62,62 +60,62 @@ class ChartPageState extends State<ChartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double barsWidth = 40;
+    final double barsSpace = 15;
+    final groups = getData(barsWidth, barsSpace);
+
+    final int barCountPerGroup = groups[0].barRods.length;
+    final double groupWidth =
+        barCountPerGroup * barsWidth + (barCountPerGroup - 1) * barsSpace + 40;
+    final double chartWidth = groups.length * groupWidth;
+
     return Scaffold(
       body: Center(
-        child: AspectRatio(
-          aspectRatio: 1.66,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final barsSpace = 4.0 * constraints.maxWidth / 400;
-                final barsWidth = 8.0 * constraints.maxWidth / 400;
-                return BarChart(
-                  BarChartData(
-                    alignment: BarChartAlignment.center,
-                    barTouchData: BarTouchData(
-                      enabled: false,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: chartWidth,
+            height: 400,
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.start,
+                barTouchData: BarTouchData(enabled: false),
+                titlesData: FlTitlesData(
+                  show: true,
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 28,
+                      getTitlesWidget: bottomTitles,
                     ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 28,
-                          getTitlesWidget: bottomTitles,
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 40,
-                          getTitlesWidget: leftTitles,
-                        ),
-                      ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                    ),
-                    gridData: FlGridData(
-                      show: true,
-                      checkToShowHorizontalLine: (value) => value % 10 == 0,
-                      getDrawingHorizontalLine: (value) => FlLine(
-                        color: AppColors.borderColor.withValues(alpha: 0.1),
-                        strokeWidth: 1,
-                      ),
-                      drawVerticalLine: false,
-                    ),
-                    borderData: FlBorderData(
-                      show: false,
-                    ),
-                    groupsSpace: barsSpace,
-                    barGroups: getData(barsWidth, barsSpace),
                   ),
-                );
-              },
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 40,
+                      getTitlesWidget: leftTitles,
+                    ),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  checkToShowHorizontalLine: (value) => value % 10 == 0,
+                  getDrawingHorizontalLine: (value) => FlLine(
+                    color: AppColors.borderColor.withValues(alpha: 0.1),
+                    strokeWidth: 1,
+                  ),
+                  drawVerticalLine: false,
+                ),
+                borderData: FlBorderData(show: false),
+                groupsSpace: barsSpace,
+                barGroups: groups,
+              ),
             ),
           ),
         ),
@@ -138,7 +136,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(2000000000, 12000000000, widget.normal),
               BarChartRodStackItem(12000000000, 17000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -148,7 +146,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(13000000000, 14000000000, widget.normal),
               BarChartRodStackItem(14000000000, 24000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -158,7 +156,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(6000000000.5, 18000000000, widget.normal),
               BarChartRodStackItem(18000000000, 23000000000.5, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -168,7 +166,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(9000000000, 15000000000, widget.normal),
               BarChartRodStackItem(15000000000, 29000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -178,7 +176,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(2000000000.5, 17000000000.5, widget.normal),
               BarChartRodStackItem(17000000000.5, 32000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
         ],
@@ -194,7 +192,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(11000000000, 18000000000, widget.normal),
               BarChartRodStackItem(18000000000, 31000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -204,7 +202,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(14000000000, 27000000000, widget.normal),
               BarChartRodStackItem(27000000000, 35000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -214,7 +212,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(8000000000, 24000000000, widget.normal),
               BarChartRodStackItem(24000000000, 31000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -224,7 +222,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(6000000000.5, 12000000000.5, widget.normal),
               BarChartRodStackItem(12000000000.5, 15000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -234,7 +232,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(9000000000, 15000000000, widget.normal),
               BarChartRodStackItem(15000000000, 17000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
         ],
@@ -250,7 +248,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(6000000000, 23000000000, widget.normal),
               BarChartRodStackItem(23000000000, 34000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -260,7 +258,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(7000000000, 24000000000, widget.normal),
               BarChartRodStackItem(24000000000, 32000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -270,7 +268,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(1000000000.5, 12000000000, widget.normal),
               BarChartRodStackItem(12000000000, 14000000000.5, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -280,7 +278,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(4000000000, 15000000000, widget.normal),
               BarChartRodStackItem(15000000000, 20000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -290,7 +288,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(4000000000, 15000000000, widget.normal),
               BarChartRodStackItem(15000000000, 24000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
         ],
@@ -306,7 +304,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(1000000000.5, 12000000000, widget.normal),
               BarChartRodStackItem(12000000000, 14000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -316,8 +314,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(7000000000, 25000000000, widget.normal),
               BarChartRodStackItem(25000000000, 27000000000, widget.light),
             ],
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(6), topRight: Radius.circular(6)),
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -327,7 +324,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(6000000000, 23000000000, widget.normal),
               BarChartRodStackItem(23000000000, 29000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -337,7 +334,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(9000000000, 15000000000, widget.normal),
               BarChartRodStackItem(15000000000, 16000000000.5, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
           BarChartRodData(
@@ -347,7 +344,7 @@ class ChartPageState extends State<ChartPage> {
               BarChartRodStackItem(7000000000, 12000000000.5, widget.normal),
               BarChartRodStackItem(12000000000.5, 15000000000, widget.light),
             ],
-            borderRadius: BorderRadius.zero,
+            borderRadius: BorderRadius.circular(6),
             width: barsWidth,
           ),
         ],
