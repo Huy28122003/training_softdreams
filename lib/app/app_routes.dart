@@ -1,4 +1,3 @@
-
 abstract class AppRoutes {
   static const splash = '/';
   static const home = '/home';
@@ -9,4 +8,5 @@ abstract class AppRoutes {
   static const auth = '/auth';
   static const animal = '/animal';
   static const chatBot = '/chatBot';
+  static const chart = '/chart';
 }

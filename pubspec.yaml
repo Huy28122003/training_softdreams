@@ -69,6 +69,7 @@ dependencies:
   sqflite_common_ffi_web: ^0.4.5+4
   otp_pin_field: ^1.4.1
   flutter_inappwebview: ^6.1.5
+  fl_chart: ^0.71.0
 
 dev_dependencies:
   flutter_test:

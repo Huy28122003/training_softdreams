@@ -5,6 +5,7 @@ import 'package:training_softdreams/presentation/pages/animal/binding/animal_bin
 import 'package:training_softdreams/presentation/pages/animal/view/animal_view.dart';
 import 'package:training_softdreams/presentation/pages/auth/binding/auth_binding.dart';
 import 'package:training_softdreams/presentation/pages/auth/view/auth_view.dart';
+import 'package:training_softdreams/presentation/pages/chart/chart_page.dart';
 import 'package:training_softdreams/presentation/pages/chat_bot/chat_bot_page.dart';
 import '../presentation/pages/demo_getx/binding/demo_getx_binding.dart';
 import '../presentation/pages/demo_getx/view/demo_getx_view.dart';
@@ -64,6 +65,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.chatBot,
       page: () => ChatbotPage(),
+    ),
+    GetPage(
+      name: AppRoutes.chart,
+      page: () => ChartPage(),
     ),
   ];
 }
