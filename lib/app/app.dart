@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         title: appTitle,
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.dark,
+        theme: AppTheme.light,
         getPages: AppPages.routes,
         initialRoute: AppRoutes.splash,
       ),

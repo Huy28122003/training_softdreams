@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const animal = '/animal';
   static const chatBot = '/chatBot';
   static const chart = '/chart';
+  static const speechToText = '/speechToText';
 }

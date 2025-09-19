@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:training_softdreams/app/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
+
+  Future<void> _openWeb() async {
+    final Uri url = Uri.parse("https://flutter.dev");
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Không mở được $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +70,18 @@ class HomeScreen extends StatelessWidget {
                   Get.toNamed(AppRoutes.chart);
                 },
                 child: const Text('Chart'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _openWeb();
+                },
+                child: const Text('Open Flutter Website'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.speechToText);
+                },
+                child: const Text('Speech to Text'),
               ),
             ],
           ),

@@ -7,6 +7,7 @@ import 'package:training_softdreams/presentation/pages/auth/binding/auth_binding
 import 'package:training_softdreams/presentation/pages/auth/view/auth_view.dart';
 import 'package:training_softdreams/presentation/pages/chart/chart_page.dart';
 import 'package:training_softdreams/presentation/pages/chat_bot/chat_bot_page.dart';
+import 'package:training_softdreams/presentation/pages/speech_to_text/speech_to_text_page.dart';
 import '../presentation/pages/demo_getx/binding/demo_getx_binding.dart';
 import '../presentation/pages/demo_getx/view/demo_getx_view.dart';
 import '../presentation/pages/demo_provider/demo_provider_screen.dart';
@@ -69,6 +70,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.chart,
       page: () => ChartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.speechToText,
+      page: () => SpeechToTextPage(),
     ),
   ];
 }
