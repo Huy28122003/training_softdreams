@@ -43,13 +43,13 @@ dependencies:
   dio: ^5.4.0
   equatable: ^2.0.5
   floor: ^1.4.2
-  flutter_bloc: ^8.1.3
+  flutter_bloc: ^9.1.1
   flutter_gen_runner: ^5.8.0
   flutter_svg: ^2.0.8
   fluttertoast: ^8.2.2
   formz: ^0.8.0
   get_it: ^8.0.2
-  intl: ^0.20.0
+  intl: ^0.19.0
   json_annotation: ^4.8.1
   logging: ^1.2.0
   page_transition: ^2.1.0
@@ -73,6 +73,11 @@ dependencies:
   url_launcher: ^6.3.2
   speech_to_text: ^7.3.0
   permission_handler: ^12.0.1
+  sip_ua:
+    git:
+      url: https://github.com/Huy28122003/sip_ua_flutter.git
+      ref: main
+
 
 dev_dependencies:
   flutter_test:

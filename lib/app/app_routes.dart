@@ -10,4 +10,6 @@ abstract class AppRoutes {
   static const chatBot = '/chatBot';
   static const chart = '/chart';
   static const speechToText = '/speechToText';
+  static const call = '/call';
+  static const agentSip = '/agentSip';
 }

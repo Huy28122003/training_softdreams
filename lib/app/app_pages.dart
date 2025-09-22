@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:training_softdreams/presentation/pages/agent_sip/agent_sip_page.dart';
 import 'package:training_softdreams/presentation/pages/animal/binding/animal_binding.dart';
 import 'package:training_softdreams/presentation/pages/animal/view/animal_view.dart';
 import 'package:training_softdreams/presentation/pages/auth/binding/auth_binding.dart';
 import 'package:training_softdreams/presentation/pages/auth/view/auth_view.dart';
+import 'package:training_softdreams/presentation/pages/call/call_page.dart';
 import 'package:training_softdreams/presentation/pages/chart/chart_page.dart';
 import 'package:training_softdreams/presentation/pages/chat_bot/chat_bot_page.dart';
 import 'package:training_softdreams/presentation/pages/speech_to_text/speech_to_text_page.dart';
@@ -74,6 +76,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.speechToText,
       page: () => SpeechToTextPage(),
+    ),
+    GetPage(
+      name: AppRoutes.call,
+      page: () => CallPage(),
+    ),
+    GetPage(
+      name: AppRoutes.agentSip,
+      page: () => AgentSipPage(),
     ),
   ];
 }

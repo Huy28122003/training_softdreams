@@ -83,6 +83,18 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: const Text('Speech to Text'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.call);
+                },
+                child: const Text('Call'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.agentSip);
+                },
+                child: const Text('Agent'),
+              ),
             ],
           ),
         ),

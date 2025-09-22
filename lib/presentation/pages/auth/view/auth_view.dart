@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:training_softdreams/app/app_routes.dart';
 import 'package:training_softdreams/configs/enums.dart';
 
 import '../controller/auth_controller.dart';
@@ -77,6 +78,8 @@ class AuthView extends GetView<AuthController> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () async {
+                      Get.toNamed(AppRoutes.home);
+                      return;
                       if (controller.isLoginMode.value) {
                         await controller.onLogIn();
                       } else {
