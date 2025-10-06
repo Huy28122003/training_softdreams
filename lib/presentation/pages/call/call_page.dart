@@ -5,19 +5,17 @@ class CallPage extends StatefulWidget {
   const CallPage({super.key});
 
   @override
-  State<CallPage> createState() => _CallPageState();
+  State<CallPage> createState() => _UserScreenState();
 }
 
-class _CallPageState extends State<CallPage> implements SipUaHelperListener {
+class _UserScreenState extends State<CallPage>
+    implements SipUaHelperListener {
   final SIPUAHelper _helper = SIPUAHelper();
   final TextEditingController _usernameController =
-      TextEditingController(text: "1245435");
+  TextEditingController(text: "1245435");
 
   String _registerStatus = 'Chưa đăng ký';
   String _callStatus = 'Chưa có cuộc gọi';
-  bool _isMicMuted = false;
-  bool _isSpeakerMuted = false;
-  Call? _currentCall;
   final List<String> _logs = [];
 
   @override
@@ -70,44 +68,6 @@ class _CallPageState extends State<CallPage> implements SipUaHelperListener {
     _addLog('Đã gửi yêu cầu kết thúc cuộc gọi');
   }
 
-  void _toggleMic() {
-    if (_currentCall == null) {
-      _addLog('❌ Không có cuộc gọi nào để điều khiển mic');
-      return;
-    }
-
-    setState(() {
-      _isMicMuted = !_isMicMuted;
-    });
-
-    if (_isMicMuted) {
-      _currentCall!.mute(true, false);
-      _addLog('🔇 Đã tắt mic');
-    } else {
-      _currentCall!.unmute(true, false);
-      _addLog('🎤 Đã bật mic');
-    }
-  }
-
-  void _toggleSpeaker() {
-    if (_currentCall == null) {
-      _addLog('❌ Không có cuộc gọi nào để điều khiển loa ngoài');
-      return;
-    }
-
-    setState(() {
-      _isSpeakerMuted = !_isSpeakerMuted;
-    });
-
-    if (_isSpeakerMuted) {
-      _currentCall!.mute(false, true);
-      _addLog('🔇 Đã tắt loa ngoài');
-    } else {
-      _currentCall!.unmute(false, true);
-      _addLog('🔊 Đã bật loa ngoài');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,26 +106,6 @@ class _CallPageState extends State<CallPage> implements SipUaHelperListener {
                   child: const Text('📞 Gọi 1000'),
                 ),
                 ElevatedButton(
-                  onPressed: _currentCall != null ? _toggleMic : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _currentCall != null
-                        ? (_isMicMuted ? Colors.red : Colors.green)
-                        : Colors.grey,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: Text(_isMicMuted ? '🔇 Bật mic' : '🎤 Tắt mic'),
-                ),
-                ElevatedButton(
-                  onPressed: _currentCall != null ? _toggleSpeaker : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _currentCall != null
-                        ? (_isSpeakerMuted ? Colors.red : Colors.blue)
-                        : Colors.grey,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: Text(_isSpeakerMuted ? '🔇 Bật loa' : '🔊 Tắt loa'),
-                ),
-                ElevatedButton(
                   onPressed: _hangUp,
                   child: const Text('❌ Kết thúc'),
                 ),
@@ -174,8 +114,6 @@ class _CallPageState extends State<CallPage> implements SipUaHelperListener {
             const SizedBox(height: 10),
             Text('📲 Đăng ký: $_registerStatus'),
             Text('📞 Cuộc gọi: $_callStatus'),
-            Text('🎤 Mic: ${_isMicMuted ? "🔇 Tắt" : "🎤 Bật"}'),
-            Text('🔊 Loa: ${_isSpeakerMuted ? "🔇 Tắt" : "🔊 Bật"}'),
             const Divider(),
             const Align(
               alignment: Alignment.centerLeft,
@@ -204,19 +142,6 @@ class _CallPageState extends State<CallPage> implements SipUaHelperListener {
   void callStateChanged(Call call, CallState state) {
     setState(() {
       _callStatus = state.state.toString();
-      // Lưu trữ cuộc gọi hiện tại khi bắt đầu cuộc gọi
-      if (state.state.toString().contains('CONNECTING') ||
-          state.state.toString().contains('PROGRESS') ||
-          state.state.toString().contains('ACCEPTED') ||
-          state.state.toString().contains('CONFIRMED')) {
-        _currentCall = call;
-      }
-      // Xóa cuộc gọi khi kết thúc
-      if (state.state.toString().contains('ENDED') ||
-          state.state.toString().contains('FAILED')) {
-        _currentCall = null;
-        _isMicMuted = false;
-      }
     });
     _addLog('Trạng thái cuộc gọi: ${state.state}');
     debugPrint('📞 Call State: ${state.state}');
