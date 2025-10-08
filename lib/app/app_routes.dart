@@ -12,4 +12,6 @@ abstract class AppRoutes {
   static const speechToText = '/speechToText';
   static const call = '/call';
   static const agentSip = '/agentSip';
+  static const doughnutChart = '/doughnutChart';
+  static const columnChart = '/columnChart';
 }

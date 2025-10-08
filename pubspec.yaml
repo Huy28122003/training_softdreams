@@ -77,7 +77,7 @@ dependencies:
     git:
       url: https://github.com/Huy28122003/sip_ua_flutter.git
       ref: main
-
+  syncfusion_flutter_charts: ^31.1.19
 
 dev_dependencies:
   flutter_test:

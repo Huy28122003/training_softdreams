@@ -95,6 +95,18 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: const Text('Agent'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.doughnutChart);
+                },
+                child: const Text('Doughnut chart'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.columnChart);
+                },
+                child: const Text('Column chart'),
+              ),
             ],
           ),
         ),
