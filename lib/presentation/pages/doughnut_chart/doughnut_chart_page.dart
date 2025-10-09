@@ -15,6 +15,7 @@ class _DoughnutChartPageState extends State<DoughnutChartPage> {
       ChartData('David', 25, Color(0xFF00A236)),
       ChartData('Steve', 38, Color(0xFFE65100)),
       ChartData('Jack', 34, Color(0xFF0074BD)),
+      ChartData('John', 34, Color(0xFF00743D)),
       ChartData('Others', 52, Color(0xFFB0B0B0))
     ];
     return Scaffold(
@@ -44,7 +45,7 @@ class _DoughnutChartPageState extends State<DoughnutChartPage> {
               widget: const Text(
                 '62%',
                 style: TextStyle(
-                  color: Color.fromRGBO(0, 0, 0, 0.5),
+                  color: Colors.black,
                   fontSize: 25,
                 ),
               ),
