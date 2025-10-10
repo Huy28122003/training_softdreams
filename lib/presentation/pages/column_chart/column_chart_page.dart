@@ -43,6 +43,10 @@ class _ColumnChartPageState extends State<ColumnChartPage> {
                     color: Color(0xFFECEEF0),
                   ),
                   majorTickLines: const MajorTickLines(size: 0),
+                  axisLine: const AxisLine(
+                    color: Color(0xFFECEEF0),
+                    width: 1,
+                  ),
                 ),
                 primaryYAxis: const NumericAxis(
                   interval: 20,
@@ -52,7 +56,10 @@ class _ColumnChartPageState extends State<ColumnChartPage> {
                     width: 1,
                     color: Color(0xFFECEEF0),
                   ),
-                  axisLine: AxisLine(width: 0),
+                  axisLine: AxisLine(
+                    color: Color(0xFFECEEF0),
+                    width: 1,
+                  ),
                   majorTickLines: MajorTickLines(size: 0),
                 ),
                 series: <CartesianSeries>[
