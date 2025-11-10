@@ -10,6 +10,7 @@ import 'package:training_softdreams/presentation/pages/call/call_page.dart';
 import 'package:training_softdreams/presentation/pages/chart/chart_page.dart';
 import 'package:training_softdreams/presentation/pages/chat_bot/chat_bot_page.dart';
 import 'package:training_softdreams/presentation/pages/column_chart/column_chart_page.dart';
+import 'package:training_softdreams/presentation/pages/deep_link/deep_link_page.dart';
 import 'package:training_softdreams/presentation/pages/doughnut_chart/doughnut_chart_page.dart';
 import 'package:training_softdreams/presentation/pages/speech_to_text/speech_to_text_page.dart';
 import '../presentation/pages/demo_getx/binding/demo_getx_binding.dart';
@@ -94,6 +95,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.columnChart,
       page: () => ColumnChartPage(),
+    ),
+    GetPage(
+      name: AppRoutes.deepLink,
+      page: () => DeepLinkPage(),
     ),
   ];
 }

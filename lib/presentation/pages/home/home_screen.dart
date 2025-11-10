@@ -107,6 +107,12 @@ class HomeScreen extends StatelessWidget {
                 },
                 child: const Text('Column chart'),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed(AppRoutes.deepLink);
+                },
+                child: const Text('Deep Link'),
+              ),
             ],
           ),
         ),

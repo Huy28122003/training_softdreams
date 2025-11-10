@@ -14,4 +14,5 @@ abstract class AppRoutes {
   static const agentSip = '/agentSip';
   static const doughnutChart = '/doughnutChart';
   static const columnChart = '/columnChart';
+  static const deepLink = '/deepLink';
 }
